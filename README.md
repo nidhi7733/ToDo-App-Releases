@@ -18,23 +18,26 @@ A modern, standalone desktop productivity suite and study planner designed for *
 
 ## ✨ Key Features
 
-- **Integrated CA Intermediate Syllabus Roadmap:**
-  - Preloaded with **785 curated study tasks** and **1,673 checklist steps** mapped for both Group 1 & Group 2.
-  - Phase-wise breakdown: First Reading, Detailed Revision, and Mock Test preparation.
-  - Automated exam countdown to Paper 1.
+- **Clean Slate Workspace:**
+  - Starts with a clean, personal task dashboard — no pre-loaded clutter.
+  - Optional profession study plan templates (e.g. CA Intermediate) can be imported in seconds via JSON restore.
 - **Multi-Profile & Offline Authentication:**
   - Support for multiple independent profiles on a single computer.
+  - Set your own custom name, email, and password during initial setup.
   - Each profile has its own password (hashed with secure `scrypt`), private tasks, routines, and category.
   - Built-in Super Admin controls to manage accounts and reset passwords.
+- **Study Plan Templates & Checklists:**
+  - CA Intermediate Jan 2028 template available with **785 curated tasks** and **1,673 checklist steps** across Group 1 & Group 2.
+  - Phase-wise breakdown: First Reading, Detailed Revision, and Mock Test preparation.
+  - Automated exam countdown to Paper 1.
 - **Daily Habit & Routine Tracker:**
-  - Track water intake, meals, sleep schedule, and early morning routines.
-  - Streak tracking and day-wise habit completion.
+  - Track water intake, meals, sleep schedule, and morning routines with streak tracking.
 - **100% Offline & Private:**
   - Stored in a lightweight local **SQLite** database (`%APPDATA%\ToDo App\todo.db`).
-  - Works without internet access.
-- **Backup & Restore:**
+  - No internet required, zero telemetry, everything stays on your PC.
+- **Backup, Restore & Template Import:**
   - Export your complete task and habit records as JSON anytime.
-  - Safely restore backups without affecting account passwords.
+  - Import downloadable profession study templates with 1 click.
 - **Theme Support:**
   - Clean, distraction-free Light and Dark modes.
 
@@ -75,10 +78,21 @@ Double-click the downloaded `.exe` file.
 2. Select whether to create desktop and start menu shortcuts.
 3. Click **Install**, then click **Finish** to launch ToDo App.
 
-### Step 4: First-Time Initialization
-1. When launched for the first time, the app creates your primary Super Admin profile.
-2. Enter a secure password (minimum 8 characters) to protect your account.
-3. Your CA Intermediate study plan and habit trackers will load automatically!
+### Step 4: First-Time Setup
+1. On first launch, enter your **Name**, **Email**, and choose your **Category / Profession** (e.g. General, CA, CS, CMA).
+2. Choose a secure **Admin Password** (at least 8 characters).
+3. Click **Set password and continue** — you'll enter your brand-new clean task dashboard.
+
+---
+
+## 📚 How to Import Profession Study Plans (Optional)
+
+If you are preparing for **CA Intermediate (January 2028)**:
+1. Download the [`ca-intermediate-jan2028-plan.json`](./templates/ca-intermediate-jan2028-plan.json) template file from this repository or the release assets.
+2. Inside ToDo App, click on **Admin** (or **Profile**) in the sidebar.
+3. Scroll to **Backup & Restore** and click **Restore from backup file**.
+4. Select `ca-intermediate-jan2028-plan.json`.
+5. All **785 tasks and 1,673 checklist steps** will be loaded instantly into your workspace!
 
 ---
 
@@ -128,4 +142,3 @@ Go to Windows <b>Settings > Apps > Installed apps</b>, search for <i>ToDo App</i
 
 Created by **Premendra Nidhi**.  
 Designed specifically for CA Intermediate Jan 2028 preparation and structured personal development.
-
