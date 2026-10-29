@@ -88,7 +88,7 @@ Double-click the downloaded `.exe` file.
 ## 📚 How to Import Profession Study Plans (Optional)
 
 If you are preparing for **CA Intermediate (January 2028)**:
-1. Download the [`ca-intermediate-jan2028-plan.json`](./templates/ca-intermediate-jan2028-plan.json) template file from this repository or the release assets.
+1. Download the [`ca-intermediate-jan2028-plan.json`](https://github.com/nidhi7733/ToDo-App-Releases/blob/main/ca-intermediate-jan2028-tracker.html) template file from this repository or the release assets.
 2. Inside ToDo App, click on **Admin** (or **Profile**) in the sidebar.
 3. Scroll to **Backup & Restore** and click **Restore from backup file**.
 4. Select `ca-intermediate-jan2028-plan.json`.
