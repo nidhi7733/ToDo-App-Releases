@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CA Intermediate Jan 2028 – Study, Workout and Food Tracker</title>
+<style>
+:root{--bg:#f3f5fa;--card:#fff;--tx:#1b2233;--mut:#5d667c;--ac:#1d3fa8;--ok:#17855a;--bd:#d9deea;--hi:#fff6d6;
+--acc:#2b5fd9;--qa:#d9731a;--law:#7a45c7;--eco:#17855a;--mock:#c9304a;--rev:#6b7385;--aud:#0e8a9a;--fm:#b8860b;--tax:#d9731a;--cma:#17855a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141f;--card:#192032;--tx:#e8ecf6;--mut:#9aa4bd;--ac:#8fb0ff;--ok:#4cc790;--bd:#2a3350;--hi:#3a3414;--acc:#6f9bff;--qa:#f09a4a;--law:#b48cf0;--eco:#4cc790;--mock:#ff7b90;--rev:#9aa4bd;--aud:#4fd0e0;--fm:#e6c24d;--tax:#f09a4a;--cma:#4cc790;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10141f;--card:#192032;--tx:#e8ecf6;--mut:#9aa4bd;--ac:#8fb0ff;--ok:#4cc790;--bd:#2a3350;--hi:#3a3414;--acc:#6f9bff;--qa:#f09a4a;--law:#b48cf0;--eco:#4cc790;--mock:#ff7b90;--rev:#9aa4bd;--aud:#4fd0e0;--fm:#e6c24d;--tax:#f09a4a;--cma:#4cc790;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2;margin:0}
+h1{font-size:1.7rem}
+.sub{color:var(--mut);margin:.3rem 0 1rem}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.count{font-family:Georgia,serif;font-size:2.2rem;color:var(--ac);line-height:1}
+.count small{display:block;font:.8rem system-ui,sans-serif;color:var(--mut)}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden;margin:.6rem 0 .2rem}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+button{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:8px;cursor:pointer}
+button:hover{border-color:var(--ac)}button:focus-visible,input:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+button.on{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+.routine{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.routine h3{font-size:1.05rem;margin-bottom:6px}
+.routine ul{margin:0;padding-left:18px;color:var(--mut)}
+.routine b{color:var(--tx)}
+.view{display:none}
+body[data-view=tracker] #tracker,body[data-view=master] #master,body[data-view=blank] #blank,body[data-view=workout] #workout,body[data-view=food] #food{display:block}
+.wk{margin:22px 0 8px;font-size:1.15rem}
+.wk span{color:var(--mut);font:.85rem system-ui,sans-serif;margin-left:8px}
+.day{background:var(--card);border:1px solid var(--bd);border-left:6px solid var(--c,var(--rev));border-radius:10px;padding:10px 14px;margin:8px 0}
+.day.today{background:var(--hi);border-color:var(--ac);border-left-color:var(--c,var(--rev))}
+.day.done{opacity:.72}
+.dh{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline}
+.dd{font-weight:700}
+.ph{font-size:.8rem;color:var(--mut)}
+.tt{margin:2px 0;font-weight:600;color:var(--c,var(--tx))}
+.rv{font-size:.88rem;color:var(--mut);margin-bottom:6px}
+.tk{display:flex;flex-wrap:wrap;gap:6px 16px}
+.tk label{display:flex;align-items:center;gap:6px;font-size:.9rem;cursor:pointer}
+.tk input{width:18px;height:18px;accent-color:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:var(--card)}
+th,td{border:1px solid var(--bd);padding:5px 7px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.blank td{height:58px}
+.pn{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.fine{color:var(--mut);font-size:.85rem}
+.sw td:first-child{border-left:5px solid var(--c,var(--rev))}
+summary.wk{cursor:pointer;padding:10px 0;margin:10px 0 0}
+.wo{font-size:.9rem;margin:2px 0 4px}.wo summary{cursor:pointer;color:var(--ac)}.wo p{margin:4px 0;color:var(--mut)}
+@media print{
+ :root{--bg:#fff;--card:#fff;--tx:#000;--mut:#333;--bd:#777}
+ body{font-size:11px}main{max-width:none;padding:0}
+ .noprint{display:none!important}
+ table{font-size:10px}th,td{padding:3px 5px}
+ tr{break-inside:avoid}
+ .blank td{height:66px}
+}
+</style>
+</head>
+<body data-view="tracker">
+<main>
+<div class="top noprint">
+ <div><h1>CA Intermediate, Jan 2028</h1><p class="sub">Daily study, workout and food tracker · one subject a day · early-morning start</p></div>
+ <div class="count" id="cd">–<small>days to Group I Paper 1 (2 Jan 2028)</small></div>
+</div>
+<div class="noprint"><div class="bar"><i id="pb"></i></div><div class="fine" id="pt"></div></div>
+
+<div class="tabs noprint" role="tablist">
+ <button class="on" data-v="tracker">Daily tracker</button>
+ <button data-v="master">Print: full plan</button>
+ <button data-v="blank">Print: blank weekly sheet</button>
+ <button data-v="workout">Workout guide</button>
+ <button data-v="food">Food guide</button>
+ <button id="pr">Print this view</button>
+</div>
+
+<section id="tracker" class="view">
+ <div class="routine">
+  <h3>Your daily routine (8 hours study + workout)</h3>
+  <ul>
+   <li><b>4:00</b> Wake up, drink water, eat 1 banana or a few soaked almonds</li>
+   <li><b>4:20 – 5:00</b> Workout (15 to 40 min, see the Workout guide), then wash and drink water</li>
+   <li><b>5:00 – 5:30</b> Revise yesterday’s topic without looking at the book</li>
+   <li><b>5:30 – 8:30</b> Learn today’s topic (YouTube lecture, then read the ICAI book)</li>
+   <li><b>9:00 – 11:30</b> Practice: book questions, then ICAI RTP / MTP questions</li>
+   <li><b>4:00 – 5:30 pm</b> Make short notes; write answers and solve case-study MCQs (about 30% of each paper)</li>
+   <li><b>8:00 – 8:30 pm</b> Night recap, then plan tomorrow</li>
+   <li><b>Meals:</b> breakfast 8:30 · fruit 11:30 · lunch 1:00 pm · snack 3:30 pm · dinner by 6:30 to 7:00 pm (see “Food today” on each day)</li>
+   <li><b>By 9:30 pm</b> In bed: you wake at 4:00 am, so protect your sleep</li>
+   <li><b>Saturday (lighter day, 4 hours):</b> weekly revision and a self-test on the week’s chapters</li>
+  </ul>
+ </div>
+ <div id="days"></div>
+</section>
+
+<section id="master" class="view">
+ <h2>Full plan: 17 Nov 2026 to 12 Jan 2028</h2>
+ <p class="fine">Tick the last column by hand as you finish each day. Adjust topic names to match your ICAI book index.</p>
+ <table><thead><tr><th>Date</th><th>Subject and topic</th><th>Workout</th><th>Hrs</th><th>Done</th></tr></thead><tbody id="mt"></tbody></table>
+</section>
+
+<section id="blank" class="view">
+ <h2>Weekly study sheet</h2>
+ <p>Week no. ______ &nbsp; Dates: ____________ to ____________ &nbsp; Weekly goal: ______________________________</p>
+ <table class="blank"><thead><tr><th>Day / date</th><th>Subject</th><th>Topic to finish today</th><th>Workout</th><th>Hrs plan</th><th>Hrs done</th><th>Workout ☐ Meals ☐ Water ☐ Revise ☐ Learn ☐ Practice ☐ Notes ☐ Recap ☐</th><th>Marks / notes</th></tr></thead>
+ <tbody id="bt"></tbody></table>
+ <p>Weekly review. What went well: __________________________________________</p>
+ <p>What I must fix next week: ____________________________________________</p>
+ <p class="fine">Print one copy per week. Daily routine: 5:00 revise · 5:30 learn · 9:00 practice · 4:00 pm notes and writing · 8:00 pm recap. Saturday is the lighter day.</p>
+</section>
+<section id="workout" class="view">
+ <h2>Home workout guide</h2>
+ <p class="fine">Beginner routine, no equipment, built to protect your back. Do it from 4:20 am, before you start studying.</p>
+ <table><thead><tr><th>Day</th><th>Session</th></tr></thead><tbody>
+ <tr><td>Sunday</td><td>Strength A: legs and core</td></tr>
+ <tr><td>Monday</td><td>Walk-jog intervals</td></tr>
+ <tr><td>Tuesday</td><td>Strength B: upper body and core</td></tr>
+ <tr><td>Wednesday</td><td>Full rest</td></tr>
+ <tr><td>Thursday</td><td>Walk-jog intervals + core</td></tr>
+ <tr><td>Friday</td><td>Back-care stretch (about 12 min)</td></tr>
+ <tr><td>Saturday</td><td>Sports or a longer walk-jog (your lighter study day)</td></tr>
+ </tbody></table>
+ <h3 style="margin-top:16px">How it grows</h3>
+ <p class="fine">The plan builds up slowly. If you stop for a few days, restart at the previous level.</p>
+ <table><thead><tr><th>Dates</th><th>Length</th><th>Why</th></tr></thead><tbody>
+ <tr><td>17 to 30 Nov 2026</td><td>15 min (Sat 25)</td><td>Build the habit, learn the moves</td></tr>
+ <tr><td>1 to 14 Dec 2026</td><td>20 min (Sat 30)</td><td>More rounds</td></tr>
+ <tr><td>15 Dec 2026 to 30 Nov 2027</td><td>30 min (Sat 40)</td><td>Keep it steady all year</td></tr>
+ <tr><td>1 Dec 2027 to 1 Jan 2028</td><td>20 min (Sat 30)</td><td>Mock tests: keep energy for studying</td></tr>
+ <tr><td>2 to 12 Jan 2028</td><td>10 min stretch</td><td>Exam days</td></tr>
+ </tbody></table>
+ <h3 style="margin-top:16px">Back safety rules</h3>
+ <ul>
+ <li>Keep your back flat and your core tight. Move slowly and never force a stretch.</li>
+ <li>Avoid sit-ups, toe touches, heavy lifting and hard twisting.</li>
+ <li>Stop if you feel sharp pain, pain going down a leg, or numbness. See a doctor or physiotherapist before you continue.</li>
+ <li>Sit with your back supported while studying and stand up every hour.</li>
+ </ul>
+ <h3 style="margin-top:16px">Healthy habits</h3>
+ <ul>
+ <li>Drink water when you wake up and eat enough through the day. At your weight, the goal is stamina and strength, not losing weight.</li>
+ <li>Sleep by 9:30 pm so a 4:00 am wake-up does not leave you tired.</li>
+ </ul>
+</section>
+<section id="food" class="view">
+ <h2>Food guide: balanced, skin-friendly, Terai foods</h2>
+ <p class="fine">The table shows the winter menu (November to February), using foods easy to find in the Terai. From March to October, “Food today” on each day switches to summer and monsoon vegetables and fruit. Swap any vegetable or fruit for what is fresh and cheap in your market. Wake-up water and a banana or a few soaked almonds come before the workout.</p>
+ <table><thead><tr><th>Day</th><th>Breakfast (8:30)</th><th>Fruit (11:30)</th><th>Lunch (1:00)</th><th>Snack (3:30)</th><th>Dinner (by 7:00)</th></tr></thead><tbody id="ft"></tbody></table>
+ <h3 style="margin-top:16px">Build every plate this way</h3>
+ <ul><li>Half the plate vegetables and salad, one quarter protein (dal, chickpeas, soybean, paneer, egg or fish), one quarter roti or rice.</li>
+ <li>Do not skip meals. Have protein at every meal to stay full while you study.</li></ul>
+ <h3 style="margin-top:16px">Eat more</h3>
+ <ul><li>Dals, chickpeas, sprouts, soybean, saag, mustard greens, cauliflower, cabbage, carrot, radish.</li>
+ <li>Orange, guava, papaya, apple and banana. Roasted chana, makhana and a small handful of peanuts or almonds.</li>
+ <li>Fish (rohu) once a week, grilled or in light curry. Plain curd in small amounts, no sugar.</li></ul>
+ <h3 style="margin-top:16px">Cut down step by step</h3>
+ <ul><li><b>Sugar in coffee:</b> half the amount for 2 weeks, then a quarter, then none. Keep coffee to 2 cups, before 2 pm.</li>
+ <li><b>Packet snacks:</b> keep only one small pack a week, then stop. Keep roasted chana, makhana or fruit at home instead.</li>
+ <li><b>Fried and oily food:</b> once every two weeks, with less oil in home cooking. Mutton only occasionally, lean and boiled or lightly cooked.</li>
+ <li><b>Sweets, biscuits, cakes, white bread, sugary drinks:</b> only a small portion on special days.</li></ul>
+ <h3 style="margin-top:16px">Water and habits</h3>
+ <ul><li>Drink 2.5 to 3 litres through the day and finish by about 8 pm. Dinner by 6:30 to 7:00 pm.</li>
+ <li>Wash your face twice a day with a gentle cleanser, do not pick pimples, change your pillowcase every week and sleep 7 to 8 hours.</li>
+ <li>Your acne gets worse around your periods. Do not diet in that week: eat enough, including saag, dal and chana.</li></ul>
+ <p class="fine">Food can help your skin, but it may not clear acne by itself. Since you have many pimples, a doctor or skin specialist can check you and treat it, especially if it leaves scars, becomes painful or does not improve in about 3 months. This guide is general, not medical advice.</p>
+</section>
+</main>
+
+<script>
+(function(){
+var SUB={acc:'Advanced Accounting',law:'Corporate and Other Laws',tax:'Taxation',cma:'Cost and Management Accounting',aud:'Auditing and Ethics',fm:'FM and Strategic Management',mock:'Mock tests',rev:'Revision'};
+var CH={
+acc:[['Accounting Standards: framework and AS 1 to 5',4],['Accounting Standards: AS 10 to 19',4],['Accounting Standards: AS 20 to 29',3],['Financial statements of companies (Schedule III)',4],['Cash flow statement',3],['Share capital: issue, forfeiture, reissue',3],['Debentures and redemption of preference shares',3],['Buy-back of securities',2],['Profit prior to incorporation',2],['Amalgamation of companies',3],['Internal reconstruction and capital reduction',3],['Branch accounting',3],['Partnership: dissolution and conversion',2],['LLP and not-for-profit accounts',3]],
+cma:[['Cost concepts and cost sheet',3],['Material cost and inventory control',3],['Labour cost and wage systems',3],['Overheads: absorption and apportionment',3],['Activity-based costing',2],['Cost book-keeping and reconciliation',2],['Job, batch and contract costing',3],['Process costing and joint products',3],['Service and operating costing',2],['Standard costing and variances',3],['Marginal costing and CVP',3],['Budgets and budgetary control',2]],
+law:[['Companies Act: incorporation and prospectus',4],['Companies Act: share capital, debentures, deposits, charges',4],['Companies Act: directors, meetings, KMP',4],['Companies Act: dividends, accounts, audit, winding up',3],['Companies Act: registration and other provisions',3],['Interpretation of statutes and General Clauses Act',3],['Negotiable Instruments Act and FEMA',4],['LLP Act, SEBI and other laws',3]],
+aud:[['Nature, objective and scope of audit',3],['Audit strategy, planning and programme',3],['Risk assessment and internal control',3],['Audit evidence and sampling',3],['Audit of items of financial statements',3],['Company audit and auditor’s reports (CARO)',3],['Audit of different types of entities',3],['Professional ethics and the CA Act',3]],
+fm:[['Scope of FM and ratio analysis',4],['Cost of capital',3],['Capital structure and leverages',4],['Capital budgeting',4],['Working capital management',3],['Dividend and sources of finance',2],['Strategic management: introduction',3],['Strategic analysis',3],['Strategic choices and implementation',3],['Strategic control, evaluation and case studies',3]],
+tax:[['Basic concepts, residential status, exempt income',4],['Income from salaries',4],['Income from house property',3],['Profits and gains of business or profession',5],['Capital gains',4],['Other sources, clubbing, set-off',3],['Deductions, computation and tax liability',3],['Advance tax, TDS, return filing',2],['GST: supply, charge, exemptions',3],['GST: place and time of supply, value',3],['GST: input tax credit and registration',3],['GST: payment, returns, e-way bill, refunds',3],['Customs duty basics',2]]};
+var ORD=['acc','cma','law','aud','fm','tax'],PR={acc:12,tax:12,law:9,cma:10,aud:8,fm:9},RV={acc:8,tax:8,law:6,cma:7,aud:6,fm:6},seq=[];
+function add(k,t,p){seq.push({k:k,p:p,t:t})}
+ORD.forEach(function(k){CH[k].forEach(function(c){for(var j=1;j<=c[1];j++)add(k,c[0]+' (day '+j+' of '+c[1]+')','Learn')});for(var cj=1;cj<=2;cj++)add(k,'Catch-up on weak chapters and short notes (day '+cj+' of 2)','Learn')});
+ORD.forEach(function(k){var n=PR[k];for(var j=1;j<=n;j++)add(k,j===n?'timed full paper, then review your mistakes':'chapter questions + RTP / MTP set '+j+' of '+(n-1),'Practice')});
+ORD.forEach(function(k){for(var j=1;j<=RV[k];j++)add(k,'Rapid revision '+j+' of '+RV[k],'Revise')});
+for(var mk=1;mk<=3;mk++){['acc','law','tax','cma','aud','fm'].forEach(function(k){add('mock','Mock '+mk+' · '+SUB[k]+' (timed 3 hrs), then review','Mock')})}
+for(var wj=1;wj<=18;wj++)add('rev','Weak-area fixes and past papers (day '+wj+' of 18)','Revise');
+add('rev','Group I formula sheets and quick revision','Final');add('rev','Group II formula sheets and quick revision','Final');add('rev','Light mixed revision and tidy your notes','Final');
+
+var D=[],d=Date.UTC(2026,10,17),end=Date.UTC(2028,0,1),n=0,last='acc',DAY=864e5;
+var FMT={timeZone:'UTC',weekday:'short',day:'numeric',month:'short',year:'numeric'};
+function fmt(x){return new Date(x).toLocaleDateString('en-GB',FMT)}
+function iso(x){return new Date(x).toISOString().slice(0,10)}
+for(;d<=end;d+=DAY){
+ var dow=new Date(d).getUTCDay(),o={d:d};
+ if(d===end){o.k='rev';o.t='Light recap of formulas and notes. Sleep early for Group I Paper 1';o.h=3;o.p='Day before exam'}
+ else if(dow===6){o.k=last;o.t='Weekly revision and self-test: '+SUB[last];o.h=4;o.p='Lighter day'}
+ else{var s=seq[n++]||{k:'rev',p:'Revise',t:'Revision'};o.k=s.k;o.t=(s.p==='Learn'||s.p==='Practice'?s.p+': ':'')+s.t;o.p=s.p;o.h=8;last=s.k==='mock'?last:s.k}
+ D.push(o);
+}
+[['acc','Group I Paper 1 exam: Advanced Accounting. Glance at formats and key standards only',1,'Exam day'],['law','Study day for Paper 2: Corporate and Other Laws (key sections, case laws)',6,'Gap day'],['law','Paper 2 exam: Corporate and Other Laws',1,'Exam day'],['tax','Study day for Paper 3: Taxation (provisions, computation practice)',6,'Gap day'],['tax','Paper 3 exam: Taxation. Group I finished',1,'Exam day'],['cma','Study day for Group II Paper 4: Cost and Management Accounting',6,'Gap day'],['cma','Paper 4 exam: Cost and Management Accounting',1,'Exam day'],['aud','Study day for Paper 5: Auditing and Ethics',6,'Gap day'],['aud','Paper 5 exam: Auditing and Ethics',1,'Exam day'],['fm','Study day for Paper 6: FM and Strategic Management',6,'Gap day'],['fm','Paper 6 exam: FM and Strategic Management. Last one, finish strong',1,'Exam day']].forEach(function(e){D.push({d:d,k:e[0],t:e[1],h:e[2],p:e[3],x:e[3]==='Exam day'});d+=DAY});
+
+var P0=Date.UTC(2026,10,30),P1=Date.UTC(2026,11,14),PM=Date.UTC(2027,11,1),EX=Date.UTC(2028,0,2);
+var RS=['4 rounds of 1 min easy jog + 2 min walk','4 rounds of 2 min jog + 1.5 min walk','5 rounds of 3 min jog + 1 min walk','4 rounds of 2 min jog + 1 min walk'];
+function wk(o){
+ var p=o.d>=PM?3:o.d<=P0?0:o.d<=P1?1:2,dw=new Date(o.d).getUTCDay(),sets=[1,2,3,2][p],r=[8,10,12,10][p],hold=[15,20,30,20][p],m=[15,20,30,20][p];
+ var wu='Warm up 3 min (march in place, arm circles, cat-cow). ',cd=' Finish with 2 min easy stretching.';
+ var run=wu+RS[p]+'. If it is dark or unsafe outside, march or jog on the spot instead.';
+ var core=' Then dead bug and bird-dog, '+sets+' x '+r+' slow reps per side.';
+ if(o.d>=EX)return{n:'Light stretch',m:10,t:'Gentle stretching only: cat-cow, child’s pose, neck and shoulder rolls. Save your energy for the papers.'};
+ if(dw===0)return{n:'Strength A: legs + core',m:m,t:wu+sets+' rounds of: chair squats x '+r+', glute bridges x '+r+', bird-dog x '+r+' per side, calf raises x '+r+', wall sit '+hold+' sec. Rest 45 sec between rounds.'+cd};
+ if(dw===1)return{n:'Walk-jog intervals',m:m,t:run+cd};
+ if(dw===2)return{n:'Strength B: upper body + core',m:m,t:wu+sets+' rounds of: '+(p?'knee push-ups':'wall push-ups')+' x '+r+', kneeling plank '+hold+' sec, side plank on knees '+Math.round(hold/2)+' sec per side, glute bridge march x '+r+'. Rest 45 sec between rounds.'+cd};
+ if(dw===3)return{n:'Rest day',m:0,t:'Full rest. A relaxed walk is fine if your body feels stiff.'};
+ if(dw===4)return{n:'Walk-jog + core',m:m,t:run+core+cd};
+ if(dw===5)return{n:'Back-care stretch',m:12,t:'Slow and gentle, never forced: cat-cow x 10, child’s pose 30 sec, knee-to-chest 20 sec each side, pelvic tilts x 10, hip-flexor and hamstring stretch 30 sec each side.'};
+ return{n:'Sports / longer walk-jog',m:m+10,t:'Badminton, football or a fun run-walk at an easy pace for '+(m+10)+' min. Stop if your back hurts. Finish with the back-care stretches.'};
+}
+var DN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var FM=[
+['Chiura (beaten rice) with peas, vegetables and roasted peanuts, small bowl plain curd','1 orange','1 katori rice, masoor dal, cauliflower-peas sabji, saag, salad','Handful roasted chana + cucumber','2 roti, moong dal, cabbage or cauliflower sabji, salad'],
+['2 moong dal chilla with mint chutney','1 guava','2 roti, moong dal, palak paneer (small paneer portion), salad','Moong sprouts chaat with onion, tomato, lemon','Vegetable khichdi (rice and moong dal), small bowl plain curd'],
+['Vegetable daliya (broken wheat) with carrot and peas','A bowl of papaya','1 katori rice, chana masala (little oil), cabbage sabji, salad','Small handful roasted makhana','Egg curry (2 eggs, light gravy), 2 roti, salad'],
+['Besan chilla with grated vegetables and chutney','1 apple','2 roti, dal, mixed vegetable curry (beans, carrot, cabbage), salad','Small handful roasted peanuts + cucumber','2 roti, palak dal, salad'],
+['Boiled sweet potato (sakarkhanda) with a few roasted peanuts','Seasonal fruit (orange, banana or guava)','1 katori rice, toor dal, mustard saag, tomato-radish salad','Carrot and cucumber sticks + roasted chana','2 roti, paneer bhurji (little oil), cauliflower sabji'],
+['1 or 2 wholewheat vegetable parathas (radish or spinach, little oil), small bowl plain curd','1 orange','2 roti, soybean curry with peas, salad','Fruit chaat, no sugar added','2 roti, chana dal, bottle gourd or other sabji'],
+['Chiura with boiled chickpeas, onion, cucumber, lemon','1 guava or a bowl of papaya','1 katori rice, light fish curry (rohu, not fried; or a small chicken curry), saag, salad','Boiled chickpeas with lemon and black pepper','Vegetable khichdi or daliya, salad']];
+function food(o){if(o.x)return 'Familiar, light food only: nothing new, oily or spicy today. Eat on time and carry water.';var mo=new Date(o.d).getUTCMonth(),m=FM[new Date(o.d).getUTCDay()],sm=mo>=2&&mo<=9;var t='Breakfast: '+m[0]+'. Mid-morning: '+m[1]+'. Lunch: '+m[2]+'. Snack: '+m[3]+'. Dinner (by 6:30 to 7:00): '+m[4]+'.';if(sm)t=t.replace(/tomato-radish/g,'tomato-cucumber').replace(/radish/g,'grated bottle gourd').replace(/cauliflower/g,'bottle gourd').replace(/cabbage/g,'ridge gourd').replace(/mustard saag/g,'seasonal saag').replace(/-peas/g,'-beans').replace(/ peas/g,' beans').replace(/1 orange/g,'1 cup watermelon or other seasonal fruit').replace(/orange, banana or guava/g,'banana, guava or watermelon')+' Hot weather: drink extra water.';return t}
+var S={};try{S=JSON.parse(localStorage.getItem('cai28')||'{}')}catch(e){}
+function save(){try{localStorage.setItem('cai28',JSON.stringify(S))}catch(e){}}
+var TK=['Morning revision','Learn','Practice','Notes / writing','Night recap'],TX=['Revise notes','Appear and give your best'];
+var total=0;D.forEach(function(o){o.w=wk(o);o.tk=o.x?['Stretch 10 min'].concat(TX):[o.w.m?'Workout '+o.w.m+' min':'Rest day kept'].concat(TK);o.tk=o.tk.concat(['Meals on time, no packet snacks','Water 2.5 to 3 L']);o.f=food(o);total+=o.tk.length});
+var now=new Date(),todayIso=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+var box=document.getElementById('days'),html='',prev='',cw=-1,base=Date.UTC(2026,10,15),nowU=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()),curW=nowU<base?0:Math.floor((nowU-base)/(7*DAY));
+D.forEach(function(o,idx){
+ var w=Math.floor((o.d-base)/(7*DAY)),id=iso(o.d);
+ if(w!==cw){if(cw>=0)html+='</details>';cw=w;html+='<details'+(w===curW?' open':'')+'><summary class="wk">Week '+(w+1)+'<span>'+fmt(base+w*7*DAY)+' to '+fmt(base+w*7*DAY+6*DAY)+'</span></summary>'}
+ html+='<div class="day" id="d'+id+'" data-i="'+idx+'" style="--c:var(--'+o.k+')"><div class="dh"><span class="dd">'+fmt(o.d)+'</span><span class="ph">'+o.p+' · '+o.h+' hrs</span></div><div class="tt">'+SUB[o.k]+': '+o.t+'</div><div class="wo"><details><summary>Workout: '+o.w.n+(o.w.m?' · '+o.w.m+' min':'')+'</summary><p>'+o.w.t+'</p></details></div><div class="wo"><details><summary>Food today</summary><p>'+o.f+'</p></details></div>'+
+ (o.x||!prev?'':'<div class="rv">Morning revision: '+prev+'</div>')+'<div class="tk">';
+ o.tk.forEach(function(t,j){html+='<label><input type="checkbox" data-k="'+id+'_'+j+'"'+(S[id+'_'+j]?' checked':'')+'> '+t+'</label>'});
+ html+='</div></div>';
+ if(!o.x)prev=o.t.replace(/^(Learn|Practice): /,'');
+});
+html+='</details>';box.innerHTML=html;
+var mt='';D.forEach(function(o){mt+='<tr class="sw" style="--c:var(--'+o.k+')"><td>'+fmt(o.d)+'</td><td><b>'+SUB[o.k]+'</b>: '+o.t+'</td><td>'+o.w.n+(o.w.m?' ('+o.w.m+' min)':'')+'</td><td>'+o.h+'</td><td>☐</td></tr>'});
+document.getElementById('mt').innerHTML=mt;
+var bt='';['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(function(x){bt+='<tr><td>'+x+'<br>____/____</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'});
+document.getElementById('bt').innerHTML=bt;
+var ft='';FM.forEach(function(m,i){ft+='<tr><td><b>'+DN[i]+'</b></td><td>'+m.join('</td><td>')+'</td></tr>'});document.getElementById('ft').innerHTML=ft;
+
+function refresh(){
+ var c=0;for(var k in S)if(S[k])c++;
+ var pct=Math.round(c/total*100);
+ document.getElementById('pb').style.width=pct+'%';
+ document.getElementById('pt').textContent=pct+'% of all tasks done ('+c+' of '+total+')';
+ D.forEach(function(o){var id=iso(o.d),el=document.getElementById('d'+id),all=o.tk.every(function(t,j){return S[id+'_'+j]});el.classList.toggle('done',all);el.classList.toggle('today',id===todayIso)});
+ var left=Math.ceil((Date.UTC(2028,0,2)-Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()))/DAY);
+ document.getElementById('cd').firstChild.nodeValue=Math.max(left,0);
+}
+box.addEventListener('change',function(e){var k=e.target.getAttribute('data-k');if(k){S[k]=e.target.checked;save();refresh()}});
+document.querySelectorAll('.tabs [data-v]').forEach(function(b){b.addEventListener('click',function(){document.body.setAttribute('data-view',b.getAttribute('data-v'));document.querySelectorAll('.tabs [data-v]').forEach(function(x){x.classList.toggle('on',x===b)})})});
+document.getElementById('pr').addEventListener('click',function(){window.print()});
+refresh();
+var t=document.getElementById('d'+todayIso);if(t)setTimeout(function(){t.scrollIntoView({block:'center'})},100);
+})();
+</script>
+</body>
+</html>
